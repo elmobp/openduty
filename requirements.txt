@@ -1,4 +1,4 @@
-Django==1.8.11
+Django==1.11.3
 argparse==1.1
 arrow==0.7
 celery==3.1.23
