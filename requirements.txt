@@ -13,6 +13,7 @@ djangorestframework==3.1.3
 django-tables2-simplefilter==0.1
 django-tables2==1.0.4
 django-bootstrap3==6.1.0
+django-uuidfield
 dnspython==1.12.0
 fpconst==0.7.2
 future==0.14.3
@@ -23,6 +24,7 @@ idna==2.5
 kombu~=3.0
 mercurial==3.4.1
 oauth2client==1.4.11
+phonenumbers
 pyasn1==0.1.7
 pyasn1-modules==0.0.5
 python-dateutil==2.4.2
