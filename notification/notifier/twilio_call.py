@@ -2,7 +2,7 @@ from openduty import settings
 
 __author__ = 'deathowl'
 
-from twilio.rest import TwilioRestClient
+from twilio.rest import Client
 
 class TwilioCallNotifier:
 
@@ -10,7 +10,7 @@ class TwilioCallNotifier:
         self.__config = config
 
     def notify(self, notification):
-        client = TwilioRestClient(self.__config['SID'], self.__config['token'])
+        client = Client(self.__config['SID'], self.__config['token'])
         try:
             client.calls.create(
                 url=settings.BASE_URL + "/twilio/%s/%s" % (notification.id, notification.user_to_notify.id),

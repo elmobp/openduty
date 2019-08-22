@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 
 __author__ = 'deathowl'
-from twilio import twiml
+from twilio.twiml.voice_response import VoiceResponse
 from django.contrib.auth.models import User
 from openduty.models import Incident
 from notification.models import ScheduledNotification
@@ -10,7 +10,7 @@ from django_twilio.decorators import twilio_view
 
 @twilio_view
 def read_notification(request, id, user_id):
-    resp = twiml.Response()
+    resp = VoiceResponse()
     try:
         notification = ScheduledNotification.objects.get(id=id)
         user = User.objects.get(id=user_id)
