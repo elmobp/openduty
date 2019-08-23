@@ -30,7 +30,7 @@ def read_notification(request, id, user_id):
 def handle_key(request, id, user_id):
     """Handle key press from a user."""
     digit_pressed = request.GET.get('Digits', None)
-    resp = twiml.Response()
+    resp = VoiceResponse()
     try:
         notification = ScheduledNotification.objects.get(id=id)
         user = User.objects.get(id=user_id)
