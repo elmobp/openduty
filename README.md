@@ -1,33 +1,29 @@
-# Build status
+#Build status
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ustream/openduty)
 [![image](https://api.travis-ci.org/ustream/openduty.svg)](https://travis-ci.org/ustream/openduty)
 [![Requirements Status](https://requires.io/github/openduty/openduty/requirements.svg?branch=master)](https://requires.io/github/openduty/openduty/requirements/?branch=master)
-
-# Important notice - project suspended
-The ex-Ustream team which is now part of IBM are **no longer maintaining this project**. Feel free to fork it and maintain it somewhere else, we will leave it accessible here but no new merges or commits will be made. Soon we will set the repository to read-only on Github.
-
-# What is this?
+#What is this?
 **Openduty** is an incident escalation tool, just like [Pagerduty](http://pagerduty.com) . It has a Pagerduty compatible API too. It's the result of the first [Ustream Hackathon](http://www.ustream.tv/blog/2014/03/27/hackathon-recap-21-ideas-11-teams-one-goal/). We enjoyed working on it.
 #Integrations
 Has been tested with Nagios, works well for us. Any Pagerduty Notifier using the Pagerduty API should work without a problem.
 [Icinga2 config](https://github.com/deathowl/OpenDuty-Icinga2) for openduty integration
 
-# Notifications
-XMPP, email, SMS, Phone(Thanks Twilio for being awesome!), and Push notifications(thanks Pushover also),and Slack are supported at the moment.
-# Current status
+#Notifications
+XMPP, email, SMS, Phone(Thanks Twilio for being awesome!), Push notifications(thanks Pushover, Prowl as well!)and Slack, HipChat, Rocket.chat are supported at the moment.
+#Current status
 Openduty is in Beta status, it can be considered stable at the moment, however major structural changes can appear anytime (not affecting the API, or the Notifier structure)
 
-# Contribution guidelines
+#Contribution guidelines
 Yes, please. You are welcome.
-# Feedback
+#Feedback
 Any feedback is welcome
 
-# Try it
+#Try it
 go to http://openduty.herokuapp.com , log in with root/toor , create your own user.
 In heroku demo mode user edit feature is disabled, so you can't misbehave.
 
-# Running on Heroku
+#Running on Heroku
 add the parts below to your settings.py and add psycopg2==2.5.1 to your requirements.txt
 
 ```
@@ -52,7 +48,7 @@ STATICFILES_DIRS = (
 )
 ```
 
-# Contributors at Ustream
+#Contributors at Ustream
 - [oker](http://github.com/oker1)
 - [tyrael](http://github.com/tyrael)
 - [dzsubek](https://github.com/dzsubek)
@@ -60,10 +56,10 @@ STATICFILES_DIRS = (
 - [akos](https://github.com/gyim)
 
 ![The team](http://deathowlsnest.com/images/cod.jpg)
-# Main contributors
+#Main contributors
 - [deathowl](http://github.com/deathowl) 
 
-# Other contributors
+#Other contributors
 - [DazWorrall](https://github.com/DazWorrall)
 - [leventyalcin](https://github.com/leventyalcin)
 - [sheran-g](https://github.com/sheran-g)
@@ -83,7 +79,24 @@ python manage.py runserver
 ```
 now, you can start hacking on it.
 
-# After models you've changed your models please run:
+# Running as a service with systemd
+*OpenDuty can be ran as a service with the help of gunicorn and systemd*
+```
+cp -r systemd/gunicorn.service.* /etc/systemd/system/
+
+cp -r systemd/celery.service* /etc/systemd/system/
+
+// EDIT VARIABLES IN *.service.d/main.conf TO REFLECT YOUR ENV
+vi /etc/systemd/system/gunicorn.service.d/main.conf
+vi /etc/systemd/system/celery.service.d/main.conf
+
+systemctl daemon-reload
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+
+```
+
+# After you've changed your models please run:
 ```
 ./manage.py schemamigration openduty --auto
 ./manage.py schemamigration notification --auto
@@ -91,7 +104,7 @@ now, you can start hacking on it.
 
 ```
 
-# If you see a new file appearing in migrations directory when pulling from upstream please run
+#If you see a new file appearing in migrations directory when pulling from upstream please run
 ```
 ./manage.py migrate
 ```
