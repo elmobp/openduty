@@ -141,8 +141,8 @@ PASSWORD_HASHERS = (
 ALLOWED_HOSTS='*'
 
 TWILIO_SETTINGS = {
-    'SID': os.environ["TWILIO_SID"],
-    'token': os.environ["TWILIO_TOKEN"],
+    'SID': os.environ["TWILIO_ACCOUNT_SID"],
+    'token': os.environ["TWILIO_AUTH_TOKEN"],
     'sms_number': os.environ["TWILIO_SMS"],
     "phone_number": os.environ["TWILIO_PHONE"],
 }
