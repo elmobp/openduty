@@ -7,7 +7,7 @@ from openduty.escalation_helper import get_escalation_for_service
 from django.utils import timezone
 from notification.models import ScheduledNotification
 from django.conf import settings
-
+import pprint
 
 class NotificationHelper(object):
     @staticmethod
@@ -44,20 +44,17 @@ class NotificationHelper(object):
             for method in methods:
                 notification_time = incident.service_key.retry * method_index + incident.service_key.escalate_after * officer_index
                 notify_at = current_time + timedelta(minutes=notification_time)
-                if notify_at < escalate_at:
-                    notification = ScheduledNotification()
-                    notification.incident = incident
-                    notification.user_to_notify = duty_officer
-                    notification.notifier = method.method
-                    notification.send_at = notify_at
-                    uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
-                    notification.message = "A Service is experiencing a problem: " + incident.incident_key + " " + incident.description + ". Handle at: " + uri + " Details: " + incident.details
+                notification = ScheduledNotification()
+                notification.incident = incident
+                notification.user_to_notify = duty_officer
+                notification.notifier = method.method
+                notification.send_at = current_time
+                uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
+                notification.message = "A Service is experiencing a problem: " + incident.incident_key + " " + incident.description + ". Handle at: " + uri + " Details: " + incident.details
 
-                    notifications.append(notification)
+                notifications.append(notification)
 
-                    print "Notify %s at %s with method: %s" % (duty_officer.username, notify_at, notification.notifier)
-                else:
-                    break
+                print "Notify %s at %s with method: %s" % (duty_officer.username, notify_at, notification.notifier)
                 method_index += 1
 
             # todo: error handling
