@@ -63,6 +63,6 @@ class ServicenowNotifier:
         ticket = self.__find_ticket(notification.message)
         if ticket is None:
              service_id = notification.message.split(":")[1].strip()
-             ticket = self.__create_ticket(service_id, notification.message,  notification.user_to_notify.profile.email, notification.user_to_notify.profile.servicenow_assignment_group)
+             ticket = self.__create_ticket(service_id, notification.message,  notification.user_to_notify.email, notification.user_to_notify.profile.servicenow_assignment_group)
         else:
             ticket = self.__update_ticket(ticket['sys_id'], notification.message, notification.user_to_notify.profile.servicenow_assignment_group)

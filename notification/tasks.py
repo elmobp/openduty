@@ -9,6 +9,7 @@ from notification.notifier.twilio_sms import TwilioSmsNotifier
 from notification.notifier.twilio_call import TwilioCallNotifier
 from notification.notifier.slack import SlackNotifier
 from notification.notifier.prowl import ProwlNotifier
+from notification.notifier.servicenow import ServicenowNotifier
 
 from notification.models import ScheduledNotification, UserNotificationMethod
 from django.conf import settings
