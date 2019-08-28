@@ -136,6 +136,7 @@ class Migration(SchemaMigration):
             'prowl_url': ('django.db.models.fields.CharField', [], {'max_length': '512', 'blank': 'True'}),
             'pushover_app_key': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'pushover_user_key': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'servicenow_assignment_group': ('django.db.models.fields.CharField', [], {'max_length': '512', 'blank': 'True'}),
             'slack_room_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})
         },

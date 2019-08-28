@@ -36,6 +36,8 @@ def send_notifications(notification_id):
             notifier = ProwlNotifier(settings.PROWL_SETTINGS)
         elif notification.notifier == UserNotificationMethod.METHOD_ROCKET:
             notifier = RocketNotifier()
+        elif notification.notifier == UserNotificationMethod.METHOD_SERVICENOW:
+            notifier = ServicenowNotifier(settings.SERVICENOW_SETTINGS)
         notifier.notify(notification)
         # Log successful notification
         logmessage = EventLog()
