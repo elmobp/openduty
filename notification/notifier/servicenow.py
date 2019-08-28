@@ -24,7 +24,7 @@ class ServicenowNotifier:
         data = response.json()
         return data
 
-    def __create_ticket(self, bs_serviceid, cmdb_ci):
+    def __create_ticket(self, bs_serviceid, cmdb_ci, assignment_group):
         params = {}
         sn = self.__do_post_request('incident', params)
     
@@ -39,6 +39,6 @@ class ServicenowNotifier:
     def notify(self, notification):
         ticket = self.__find_ticket(notification.message)
         if ticket is None:
-            ticket = self.__create_ticket('somethihg', 'somehting')
+            ticket = self.__create_ticket('somethihg', 'somehting', notification.user_to_notify.profile.servicenow_assignment_group)
         else:
             ticket = self.__update_ticket(ticket.id, notification.message)
