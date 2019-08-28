@@ -118,6 +118,12 @@ SLACK_SETTINGS = {
    'apikey': os.environ["SLACK_KEY"]
 }
 
+SERVICENOW_SETTINGS = {
+   'instance': os.environ["SN_INSTANCE"]
+   'username': os.environ["SN_USERNAME"]
+   'password': os.environ["SN_PASSWORD"]
+}
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
