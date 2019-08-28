@@ -24,6 +24,9 @@ class Migration(SchemaMigration):
             ('message', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('user_to_notify', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('send_at', self.gf('django.db.models.fields.DateTimeField')()),
+            ('serviceid', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('check', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('output', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('incident', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['openduty.Incident'])),
         ))
         db.send_create_signal(u'notification', ['ScheduledNotification'])
@@ -81,6 +84,9 @@ class Migration(SchemaMigration):
             'message': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'notifier': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'send_at': ('django.db.models.fields.DateTimeField', [], {}),
+            'serviceid': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'check': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'output': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'user_to_notify': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'notification.usernotificationmethod': {

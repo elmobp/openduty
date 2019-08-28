@@ -51,6 +51,9 @@ class NotificationHelper(object):
                 notification.send_at = current_time
                 uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
                 notification.message = "Monitoring alert: " + incident.incident_key + " : " + incident.description + ". : Handle at: " + uri + " Details: " + incident.details
+                notification.serviceid = incident.incident_key
+                notification.check = incident.description
+                notification.output = incident.details
 
                 notifications.append(notification)
 

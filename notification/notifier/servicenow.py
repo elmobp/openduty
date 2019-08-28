@@ -22,21 +22,23 @@ class ServicenowNotifier:
         response = requests.put(self.__base_url + "/" + path, auth=(self.__config['username'], self.__config['password']), headers=self.__headers, json = params)
         return response
 
-    def __create_ticket(self, serviceid, message, user, assignment_group):
+    def __create_ticket(self, notification, user, assignment_group):
+        fout = open("/tmp/file_out.txt", "a")
+        fout.write(pprint.pformat(notification))
         params = {
             'assignment_group': assignment_group,
             'caller_id': 'admin',
             'assigned_to': user,
-            'short_description': message,
-            'u_key_information': message,
-            'cmdb_ci': serviceid
+            'short_description': notification.serviceid + ": Monitoring alert",
+            'u_key_information': "The check " + notification.check + " currently has a problem with message: " + notification.output,
+            'cmdb_ci': notification.serviceid
         }
         response = self.__do_post_request('incident', params)
         return response
 
-    def __update_ticket(self, ticket, notes, assignment_group):
+    def __update_ticket(self, ticket, notification, assignment_group):
         params = {
-          'work_notes': notes,
+          'work_notes': "The check " + notification.check + " currently has a problem with message: " + notification.output,
           'assignment_group': assignment_group
         }
         sn = self.__do_put_request('incident/' + ticket, params)
@@ -60,9 +62,10 @@ class ServicenowNotifier:
 
       
     def notify(self, notification):
-        ticket = self.__find_ticket(notification.message)
+        fout = open("/tmp/file_out.txt", "a")
+        fout.write(pprint.pformat(notification))
+        ticket = self.__find_ticket(notification.serviceid + ": Monitoring alert")
         if ticket is None:
-             service_id = notification.message.split(":")[1].strip()
-             ticket = self.__create_ticket(service_id, notification.message,  notification.user_to_notify.email, notification.user_to_notify.profile.servicenow_assignment_group)
+            ticket = self.__create_ticket(notification,  notification.user_to_notify.email, notification.user_to_notify.profile.servicenow_assignment_group)
         else:
-            ticket = self.__update_ticket(ticket['sys_id'], notification.message, notification.user_to_notify.profile.servicenow_assignment_group)
+            ticket = self.__update_ticket(ticket['sys_id'], notification, notification.user_to_notify.profile.servicenow_assignment_group)

@@ -65,6 +65,9 @@ class Migration(SchemaMigration):
             'message': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'notifier': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'send_at': ('django.db.models.fields.DateTimeField', [], {}),
+            'serviceid': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'check': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'output': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'user_to_notify': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'notification.usernotificationmethod': {
