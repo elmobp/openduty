@@ -1,6 +1,5 @@
 import requests
 import datetime
-import pprint
 class ServicenowNotifier:
 
     def __init__(self, config):
@@ -23,14 +22,13 @@ class ServicenowNotifier:
         return response
 
     def __create_ticket(self, notification, user, assignment_group):
-        fout = open("/tmp/file_out.txt", "a")
-        fout.write(pprint.pformat(notification))
         params = {
             'assignment_group': assignment_group,
-            'caller_id': 'admin',
+            'caller_id': self.__config['caller_id'],
+            'contact_type': self.__config['contact_type'],
             'assigned_to': user,
             'short_description': notification.serviceid + ": Monitoring alert",
-            'u_key_information': "The check " + notification.check + " currently has a problem with message: " + notification.output,
+            'description': "The check " + notification.check + " currently has a problem with message: " + notification.output,
             'cmdb_ci': notification.serviceid
         }
         response = self.__do_post_request('incident', params)

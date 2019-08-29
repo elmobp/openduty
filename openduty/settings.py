@@ -119,9 +119,11 @@ SLACK_SETTINGS = {
 }
 
 SERVICENOW_SETTINGS = {
-   'instance': os.environ["SN_INSTANCE"]
-   'username': os.environ["SN_USERNAME"]
-   'password': os.environ["SN_PASSWORD"]
+   'instance': os.environ["SN_INSTANCE"],
+   'username': os.environ["SN_USERNAME"],
+   'password': os.environ["SN_PASSWORD"],
+   'caller_id': os.environ["SN_CALLER_ID"],
+   'contact_type': os.environ["SN_CONTACT_TYPE"],
 }
 
 CACHES = {
