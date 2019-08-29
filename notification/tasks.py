@@ -67,4 +67,3 @@ def send_notifications(notification_id):
             logmessage.occurred_at = timezone.now()
             logmessage.save()
         raise
-
