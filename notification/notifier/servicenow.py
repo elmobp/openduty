@@ -2,10 +2,11 @@ import requests
 import datetime
 class ServicenowNotifier:
 
-    def __init__(self, config):
+    def __init__(self, config, custom_fields):
         self.__config = config 
         self.__base_url = "https://" + self.__config["instance"] + ".service-now.com/api/now/table"
         self.__headers = {"Content-Type":"application/json","Accept":"application/json"}
+        self.__custom_fields = custom_fields
 
     def __do_get_request(self, path, params = {}):
         response = requests.get(self.__base_url + "/" + path, auth=(self.__config['username'], self.__config['password']), headers=self.__headers, params = params)
@@ -31,7 +32,8 @@ class ServicenowNotifier:
             'description': "The check " + notification.check + " currently has a problem with message: " + notification.output,
             'cmdb_ci': notification.serviceid
         }
-        response = self.__do_post_request('incident', params)
+        ticket_params = dict(params.items() + self.__custom_fields.items())
+        response = self.__do_post_request('incident', ticket_params)
         return response
 
     def __update_ticket(self, ticket, notification, assignment_group):
@@ -60,8 +62,6 @@ class ServicenowNotifier:
 
       
     def notify(self, notification):
-        fout = open("/tmp/file_out.txt", "a")
-        fout.write(pprint.pformat(notification))
         ticket = self.__find_ticket(notification.serviceid + ": Monitoring alert")
         if ticket is None:
             ticket = self.__create_ticket(notification,  notification.user_to_notify.email, notification.user_to_notify.profile.servicenow_assignment_group)

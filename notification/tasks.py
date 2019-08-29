@@ -38,7 +38,7 @@ def send_notifications(notification_id):
         elif notification.notifier == UserNotificationMethod.METHOD_ROCKET:
             notifier = RocketNotifier()
         elif notification.notifier == UserNotificationMethod.METHOD_SERVICENOW:
-            notifier = ServicenowNotifier(settings.SERVICENOW_SETTINGS)
+            notifier = ServicenowNotifier(settings.SERVICENOW_SETTINGS, settings.SERVICENOW_CUSTOM_FIELDS)
         notifier.notify(notification)
         # Log successful notification
         logmessage = EventLog()
