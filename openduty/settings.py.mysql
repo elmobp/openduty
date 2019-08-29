@@ -126,6 +126,10 @@ SERVICENOW_SETTINGS = {
    'contact_type': os.environ["SN_CONTACT_TYPE"],
 }
 
+SERVICENOW_CUSTOM_FIELDS = {
+   'urgency': 1
+}
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
