@@ -102,6 +102,7 @@ class Migration(SchemaMigration):
         u'openduty.service': {
             'Meta': {'object_name': 'Service'},
             'escalate_after': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'servicenow_assignment_group': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '80'}),
             'id': ('uuidfield.fields.UUIDField', [], {'unique': 'True', 'max_length': '32', 'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
             'notifications_disabled': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -136,6 +137,7 @@ class Migration(SchemaMigration):
             'prowl_url': ('django.db.models.fields.CharField', [], {'max_length': '512', 'blank': 'True'}),
             'pushover_app_key': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'pushover_user_key': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'servicenow_assignment_group': ('django.db.models.fields.CharField', [], {'max_length': '512', 'blank': 'True'}),
             'slack_room_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})
         },

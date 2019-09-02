@@ -85,6 +85,7 @@ class Migration(migrations.Migration):
                 ('id', uuidfield.fields.UUIDField(primary_key=True, serialize=False, editable=False, max_length=32, blank=True, unique=True)),
                 ('retry', models.IntegerField(null=True, blank=True)),
                 ('escalate_after', models.IntegerField(null=True, blank=True)),
+                ('servicenow_assignment_group', models.CharField(null=True, blank=True, max_length=80)),
                 ('notifications_disabled', models.BooleanField(default=False)),
                 ('policy', models.ForeignKey(blank=True, to='openduty.SchedulePolicy', null=True)),
             ],
@@ -129,6 +130,7 @@ class Migration(migrations.Migration):
                 ('pushover_user_key', models.CharField(max_length=50)),
                 ('pushover_app_key', models.CharField(max_length=50)),
                 ('slack_room_name', models.CharField(max_length=50)),
+                ('servicenow_assignment_group', models.CharField(max_length=512))
                 ('prowl_api_key', models.CharField(max_length=50, blank=True)),
                 ('prowl_application', models.CharField(max_length=256, blank=True)),
                 ('prowl_url', models.CharField(max_length=512, blank=True)),

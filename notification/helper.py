@@ -7,7 +7,6 @@ from openduty.escalation_helper import get_escalation_for_service
 from django.utils import timezone
 from notification.models import ScheduledNotification
 from django.conf import settings
-import pprint
 
 class NotificationHelper(object):
     @staticmethod
@@ -33,6 +32,17 @@ class NotificationHelper(object):
         current_time = now
 
         notifications = []
+        if SERVICENOW_ENABLED:
+            notification = ScheduledNotification()
+            notification.incident = incident
+            notification.notifier = "servicenow"
+            uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
+            notification.message = "Monitoring alert: " + incident.incident_key + " : " + incident.description + ". : Handle at: " + uri + " Details: " + incident.details
+            notification.serviceid = incident.incident_key
+            notification.check = incident.description
+            notification.output = incident.details
+            notifications.append(notification)
+            notification.servicenow_assignment_group = incident.service_key.servicenow_assignment_group
 
         for officer_index, duty_officer in enumerate(duty_officers):
             escalation_time = incident.service_key.escalate_after * (officer_index + 1)
@@ -50,7 +60,10 @@ class NotificationHelper(object):
                 notification.notifier = method.method
                 notification.send_at = current_time
                 uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
-                notification.message = "A Service is experiencing a problem: " + incident.incident_key + " " + incident.description + ". Handle at: " + uri + " Details: " + incident.details
+                notification.message = "Monitoring alert: " + incident.incident_key + " : " + incident.description + ". : Handle at: " + uri + " Details: " + incident.details
+                notification.serviceid = incident.incident_key
+                notification.check = incident.description
+                notification.output = incident.details
 
                 notifications.append(notification)
 

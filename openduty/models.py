@@ -67,6 +67,7 @@ class Service(models.Model):
     Incidents are representations of a malfunction in the system.
     """
     name = models.CharField(max_length=80, unique=True)
+    servicenow_assignment_group = models.CharField(max_length=80, blank=True, null=True)
     id = UUIDField(primary_key=True, auto=True)
     retry = models.IntegerField(blank=True, null=True)
     policy = models.ForeignKey(SchedulePolicy, blank=True, null=True)
@@ -219,6 +220,7 @@ class UserProfile(models.Model):
     pushover_user_key = models.CharField(max_length=50)
     pushover_app_key = models.CharField(max_length=50)
     slack_room_name = models.CharField(max_length=50)
+    servicenow_assignment_group = models.CharField(max_length=512, blank=True)
     prowl_api_key = models.CharField(max_length=50, blank=True)
     prowl_application = models.CharField(max_length=256, blank=True)
     prowl_url = models.CharField(max_length=512, blank=True)

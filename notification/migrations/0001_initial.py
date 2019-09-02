@@ -24,6 +24,9 @@ class Migration(SchemaMigration):
             ('message', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('user_to_notify', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('send_at', self.gf('django.db.models.fields.DateTimeField')()),
+            ('serviceid', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('check', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('output', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('incident', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['openduty.Incident'])),
         ))
         db.send_create_signal(u'notification', ['ScheduledNotification'])
@@ -81,6 +84,9 @@ class Migration(SchemaMigration):
             'message': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'notifier': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'send_at': ('django.db.models.fields.DateTimeField', [], {}),
+            'serviceid': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'check': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'output': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'user_to_notify': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'notification.usernotificationmethod': {
@@ -109,6 +115,7 @@ class Migration(SchemaMigration):
         u'openduty.service': {
             'Meta': {'object_name': 'Service'},
             'escalate_after': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'servicenow_assignment_group': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '80'}),
             'id': ('uuidfield.fields.UUIDField', [], {'unique': 'True', 'max_length': '32', 'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
             'policy': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['openduty.SchedulePolicy']", 'null': 'True', 'blank': 'True'}),
