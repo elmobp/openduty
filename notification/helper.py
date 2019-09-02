@@ -33,16 +33,19 @@ class NotificationHelper(object):
 
         notifications = []
         if settings.SERVICENOW_ENABLED:
-            notification = ScheduledNotification()
-            notification.incident = incident
-            notification.notifier = "servicenow"
-            uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
-            notification.message = "Monitoring alert: " + incident.incident_key + " : " + incident.description + ". : Handle at: " + uri + " Details: " + incident.details
-            notification.serviceid = incident.incident_key
-            notification.check = incident.description
-            notification.output = incident.details
-            notifications.append(notification)
-            notification.servicenow_assignment_group = incident.service_key.servicenow_assignment_group
+            for officer_index, duty_officer in enumerate(duty_officers):
+                notification = ScheduledNotification()
+                notification.incident = incident
+                notification.notifier = "servicenow"
+                uri = settings.BASE_URL + "/incidents/details/" + str(incident.id)
+                notification.message = "Monitoring alert: " + incident.incident_key + " : " + incident.description + ". : Handle at: " + uri + " Details: " + incident.details
+                notification.serviceid = incident.incident_key
+                notification.check = incident.description
+                notification.output = incident.details
+                notification.send_at = current_time
+                notification.user_to_notify = duty_officer
+                notification.servicenow_assignment_group =  incident.service_key.servicenow_assignment_group
+                notifications.append(notification)
 
         for officer_index, duty_officer in enumerate(duty_officers):
             escalation_time = incident.service_key.escalate_after * (officer_index + 1)

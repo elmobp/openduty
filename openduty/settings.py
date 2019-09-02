@@ -118,6 +118,8 @@ SLACK_SETTINGS = {
    'apikey': os.environ["SLACK_KEY"]
 }
 
+SERVICENOW_ENABLED = True
+
 SERVICENOW_SETTINGS = {
    'instance': os.environ["SN_INSTANCE"],
    'username': os.environ["SN_USERNAME"],
@@ -140,11 +142,14 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test_sqlite.db',
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': os.environ["DB_NAME"],
+        'USER': os.environ["DB_USER"],
+        'PASSWORD': os.environ["DB_PASSWORD"],
+        'HOST': os.environ["DB_HOST"],
+        'PORT': '3306',
     }
 }
-
 
 PASSWORD_HASHERS = (
         'django.contrib.auth.hashers.MD5PasswordHasher',

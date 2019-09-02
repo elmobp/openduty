@@ -55,7 +55,7 @@ def edit(request, id):
             'api_keys': api_keys,
             'service_silenced': service_silenced,
             'url': request.get_full_path(),
-            'serivcenow_enabled': settings.SERVICENOW_ENABLED
+            'servicenow_enabled': True
         })
     except Service.DoesNotExist:
         raise Http404

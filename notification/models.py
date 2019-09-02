@@ -48,6 +48,7 @@ class ScheduledNotification(models.Model):
     serviceid = models.CharField(max_length=100)
     check = models.CharField(max_length=100)
     output = models.CharField(max_length=500)
+    servicenow_assignment_group = models.CharField(max_length=80)
     class Meta:
         verbose_name = _('scheduled_notifications')
         verbose_name_plural = _('scheduled_notifications')

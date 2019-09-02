@@ -82,6 +82,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'incident': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['openduty.Incident']"}),
             'message': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'servicenow_assignment_group': ('django.db.models.fields.CharField', [], {'blank': 'True', 'null': 'True', 'max_length': '80'}),
             'notifier': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'send_at': ('django.db.models.fields.DateTimeField', [], {}),
             'serviceid': ('django.db.models.fields.CharField', [], {'max_length': '100'}),

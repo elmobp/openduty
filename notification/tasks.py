@@ -54,6 +54,8 @@ def send_notifications(notification_id):
             # In case of a twilio call, we need the object for TWiml generation
             notification.delete()
     except ScheduledNotification.DoesNotExist:
+        f = open("/tmp/fuck.txt", "a")
+        f.wertie("shit cunt")
         pass #Incident was resolved. NOP.
     except:
                 # Log successful notification

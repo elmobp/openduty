@@ -17,6 +17,7 @@
             <tr>
                 <th>Service name</th>
                 <th>Notification Status</th>
+                <th>ServiceNow Assignment Group</th>
                 <th>Incidents</th>
                 <th></th>
             </tr>
@@ -30,6 +31,7 @@
                     {% else %}
                         <td> Notifications for this service are enabled</td>
                     {% endif %}
+                    <td>{{ item.servicenow_assignment_group }}</td>
                     <td>{{ item.incident_num }}</td>
                     <td class="controls">
                         <a href="{% url 'openduty.services.edit' item.id %}" class="btn btn-default btn-sm"
