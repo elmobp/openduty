@@ -2,6 +2,7 @@ from django.utils import timezone
 
 __author__ = 'deathowl'
 
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
@@ -54,6 +55,7 @@ def edit(request, id):
             'api_keys': api_keys,
             'service_silenced': service_silenced,
             'url': request.get_full_path(),
+            'serivcenow_enabled': settings.SERVICENOW_ENABLED
         })
     except Service.DoesNotExist:
         raise Http404

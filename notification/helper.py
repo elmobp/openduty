@@ -32,7 +32,7 @@ class NotificationHelper(object):
         current_time = now
 
         notifications = []
-        if SERVICENOW_ENABLED:
+        if settings.SERVICENOW_ENABLED:
             notification = ScheduledNotification()
             notification.incident = incident
             notification.notifier = "servicenow"

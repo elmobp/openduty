@@ -43,7 +43,7 @@
     {% if servicenow_enabled %}
     <div class="form-group">
         <label for="servicenow_assignment_group" class="col-sm-2 control-label">ServiceNow Assignment Group</label>
-        <input name="servicenow_assignment_group" class="form-control" placeholder="ServiceNow Assignment Group">
+        <input name="servicenow_assignment_group" class="form-control" placeholder="ServiceNow Assignment Group" value="{% if item.servicenow_assignment_group %}{{ item.servicenow_assignment_group }}{% endif %}">
     </div>
     {% endif %}
     <div class="form-group">
