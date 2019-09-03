@@ -15,7 +15,7 @@ MAINTAINER Michael Baker <michael.baker@ac3.com.au>
 RUN apt-get update && \
 apt-get -y upgrade && \
 apt-get -y install nginx supervisor && \
-apt-get -y install git python-pip python-dev build-essential mysql-client g++ libbz2-dev libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libxslt-dev make zlib1g-dev libmysqlclient-dev libldap2-dev libsasl2-dev && \
+apt-get -y install git xmlsec1 python-pip python-dev build-essential mysql-client g++ libbz2-dev libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libxslt-dev make zlib1g-dev libmysqlclient-dev libldap2-dev libsasl2-dev && \
 pip install --upgrade pip && \
 pip install -vU setuptools && \
 git clone https://github.com/elmobp/openduty.git -b snow /opt/openduty
