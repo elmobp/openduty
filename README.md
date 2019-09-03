@@ -4,9 +4,6 @@
 [![image](https://api.travis-ci.org/ustream/openduty.svg)](https://travis-ci.org/ustream/openduty)
 [![Requirements Status](https://requires.io/github/openduty/openduty/requirements.svg?branch=master)](https://requires.io/github/openduty/openduty/requirements/?branch=master)
 
-# Important notice - project suspended
-The ex-Ustream team which is now part of IBM are **no longer maintaining this project**. Feel free to fork it and maintain it somewhere else, we will leave it accessible here but no new merges or commits will be made. Soon we will set the repository to read-only on Github.
-
 # What is this?
 **Openduty** is an incident escalation tool, just like [Pagerduty](http://pagerduty.com) . It has a Pagerduty compatible API too. It's the result of the first [Ustream Hackathon](http://www.ustream.tv/blog/2014/03/27/hackathon-recap-21-ideas-11-teams-one-goal/). We enjoyed working on it.
 #Integrations
@@ -14,7 +11,7 @@ Has been tested with Nagios, works well for us. Any Pagerduty Notifier using the
 [Icinga2 config](https://github.com/deathowl/OpenDuty-Icinga2) for openduty integration
 
 # Notifications
-XMPP, email, SMS, Phone(Thanks Twilio for being awesome!), and Push notifications(thanks Pushover also),and Slack are supported at the moment.
+XMPP, email, SMS, Phone(Thanks Twilio for being awesome!), and Push notifications(thanks Pushover also),Slack and ServiceNow are supported at the moment.
 # Current status
 Openduty is in Beta status, it can be considered stable at the moment, however major structural changes can appear anytime (not affecting the API, or the Notifier structure)
 
@@ -67,8 +64,19 @@ STATICFILES_DIRS = (
 - [DazWorrall](https://github.com/DazWorrall)
 - [leventyalcin](https://github.com/leventyalcin)
 - [sheran-g](https://github.com/sheran-g)
+- [elmobp](https://github.com/elmobp)
 
 # Getting started:
+
+# Easy way
+This will bring up a OepnDuty container + a MySQL container and rpreload a user with the name admin and password of password in!
+```
+cd extra/docker
+docker-compose up
+```
+
+# Hard way!
+
 ```
 sudo easy_install pip
 sudo pip install virtualenv
@@ -103,10 +111,31 @@ root/toor
 ```
 celery -A openduty worker -l info
 ```
+# Login with SAML
 
+OD provides no SAML metadata
+Download the Federation Metadata from ADFS and place it in /opt/openduty/openduty/metadata.xml
+In the ADFS console add a Relying Party Trust
+Enter the data manually option
+Display Name:Open Duty
+Next...
+ADFS Profile (First option)
+Skip the certificate section press Next
+Tick the box enable support for the SAML 2.0 service URL
+Relying party URL: https://openduty-url/saml2_auth/acs/
+Next, Next, Next, Finish!
+Click on the AC3 Open Duty and press Edit Claim Rules
+Add rule
+Send Claims Using Custom Rule
+Claim Rule Name: OpenDuty attributes
+Rule: 
+```
+c:[Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname", Issuer == "AD AUTHORITY"]
+ => issue(store = "Active Directory", types = ("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "UserName", "Email"), query = ";mail,sAMAccountName,mail;{0}", param = c.Value);
+```
 # Login using basic authentication with LDAP-backend
 
-Add the following snippet to your settings_prod/dev.py, dont forget about import
+Add the following snippet to your openduty/settings.py, dont forget about import
 
 ```
 AUTH_LDAP_SERVER_URI = "ldap://fqdn:389"
