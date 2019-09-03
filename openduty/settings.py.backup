@@ -23,7 +23,6 @@ LOGIN_URL = '/login/'
 
 PROFILE_MODULE = 'openduty.UserProfile'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 INSTALLED_APPS = (
@@ -131,6 +130,9 @@ SERVICENOW_SETTINGS = {
 }
 
 SERVICENOW_CUSTOM_FIELDS = {
+   'company': 'AC3 Internal',
+   'category': 'infrastructure',
+   'subcategory': 'monitoring'
 }
 
 CACHES = {
@@ -143,8 +145,12 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test_sqlite.db',
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': os.environ["DB_NAME"],
+        'USER': os.environ["DB_USER"],
+        'PASSWORD': os.environ["DB_PASSWORD"],
+        'HOST': os.environ["DB_HOST"],
+        'PORT': '3306',
     }
 }
 
@@ -161,28 +167,16 @@ TWILIO_SETTINGS = {
     "phone_number": os.environ["TWILIO_PHONE"],
 }
 
-SAML_USE_NAME_ID_AS_USERNAME = True
-
-# urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
 SAML2_AUTH = {
     # Required setting
     'SAML_CLIENT_SETTINGS': { # Pysaml2 Saml client settings (https://pysaml2.readthedocs.io/en/latest/howto/config.html)
-        'entityid': 'https://URL-TO-OD/saml2_auth/acs/', # The optional entity ID string to be passed in the 'Issuer' element of authn request, if required by the IDP.
+        'entityid': 'https://openduty.poc.bulletproof.net/saml2_auth/acs/', # The optional entity ID string to be passed in the 'Issuer' element of authn request, if required by the IDP.
         'metadata': {
-            'local': [
-                   "/opt/openduty/openduty/metadata.xml"
+            'remote': [
+                {
+                    "url": 'https://signon.bulletproof.net/FederationMetadata/2007-06/FederationMetadata.xml', # The auto(dynamic) metadata configuration URL of SAML2
+                },
             ],
         },
-       'service': {
-         'sp': {
-          'name_id_format': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'
-        }
-       },
-'ATTRIBUTES_MAP': {  # Change Email/UserName/FirstName/LastName to corresponding SAML2 userprofile attributes.
-        'email': 'Email',
-        'username': 'UserName',
-        'first_name': 'FirstName',
-        'last_name': 'LastName',
-    }
     },
 }

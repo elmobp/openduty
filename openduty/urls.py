@@ -9,7 +9,7 @@ from .models import Incident
 from .tables import IncidentTable
 from django_tables2_simplefilter import FilteredSingleTableView
 from .incidents import ServicesByMe
-
+import django_saml2_auth.views
 admin.autodiscover()
 rest_router = rest_routers.SimpleRouter(trailing_slash=False)
 rest_router.register(r'users', views.UserViewSet)
@@ -27,6 +27,10 @@ rest_router.register(r'oncall', opsweekly.OpsWeeklyOnCallViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.
 urlpatterns = patterns('',
+    url(r'^saml2_auth/', include('django_saml2_auth.urls')),
+    url(r'^accounts/login/$', django_saml2_auth.views.signin),
+    url(r'^admin/login/$', django_saml2_auth.views.signin),
+    url(r'^login/$', django_saml2_auth.views.signin),
     url(r'^api/', include(rest_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),

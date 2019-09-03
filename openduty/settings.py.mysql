@@ -23,6 +23,7 @@ LOGIN_URL = '/login/'
 
 PROFILE_MODULE = 'openduty.UserProfile'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 INSTALLED_APPS = (
@@ -42,7 +43,8 @@ INSTALLED_APPS = (
     'django_tables2',
     'django_tables2_simplefilter',
     'bootstrap3',
-    "django_twilio"
+    "django_twilio",
+    "django_saml2_auth"
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -129,7 +131,6 @@ SERVICENOW_SETTINGS = {
 }
 
 SERVICENOW_CUSTOM_FIELDS = {
-   'urgency': 1
 }
 
 CACHES = {
@@ -162,4 +163,30 @@ TWILIO_SETTINGS = {
     'token': os.environ["TWILIO_AUTH_TOKEN"],
     'sms_number': os.environ["TWILIO_SMS"],
     "phone_number": os.environ["TWILIO_PHONE"],
+}
+
+SAML_USE_NAME_ID_AS_USERNAME = True
+
+# urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+SAML2_AUTH = {
+    # Required setting
+    'SAML_CLIENT_SETTINGS': { # Pysaml2 Saml client settings (https://pysaml2.readthedocs.io/en/latest/howto/config.html)
+        'entityid': 'https://URL-TO-OD/saml2_auth/acs/', # The optional entity ID string to be passed in the 'Issuer' element of authn request, if required by the IDP.
+        'metadata': {
+            'local': [
+                   "/opt/openduty/openduty/metadata.xml"
+            ],
+        },
+       'service': {
+         'sp': {
+          'name_id_format': 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'
+        }
+       },
+'ATTRIBUTES_MAP': {  # Change Email/UserName/FirstName/LastName to corresponding SAML2 userprofile attributes.
+        'email': 'Email',
+        'username': 'UserName',
+        'first_name': 'FirstName',
+        'last_name': 'LastName',
+    }
+    },
 }
