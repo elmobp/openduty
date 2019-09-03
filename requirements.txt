@@ -14,6 +14,7 @@ django-tables2-simplefilter==0.1
 django-tables2==1.0.4
 django-bootstrap3==6.1.0
 django-uuidfield
+django-saml2-auth-ai
 dnspython==1.12.0
 fpconst==0.7.2
 future==0.14.3
